@@ -12,11 +12,24 @@ using namespace std;
 template<typename T>
 
 class DisjoinSet{
+protected:
+    vector<T>& getData() {
+        return data;
+    }
+
+    int* getParents() {
+        return parents;
+    }
+
+    int* getRank() {
+        return rank;
+    }
+
 private:
-    vector<T> data;  // Almacena los elementos del conjunto
-    int* parents;    // Almacena los representantes de cada conjunto
-    int* rank;       // Almacena la altura de los conjuntos para optimizar la unión
-    int numSets;      // Almacena el número actual de conjuntos
+    vector<T> data;
+    int* parents;
+    int* rank;
+    int numSets;
 public:
     DisjoinSet(vector<T> data){
         this->data = data;
@@ -28,7 +41,7 @@ public:
 
     // METODOS -----------------
     // Inicializa los conjuntos, asignando a cada elemento su propio conjunto
-    void makeset(){
+    virtual void makeset(){
         for(int i=0;i<data.size();i++){
             this->parents[i] = i;
             this->rank[i] = 0;
@@ -36,13 +49,13 @@ public:
     }
 
     // Encuentra el representante (raíz) del conjunto al que pertenece el elemento en la posición 'index'
-    int Find(int index){
+    virtual int Find(int index){
         if(index == parents[index]) return index;
         else return Find(parents[index]);
     }
 
     // Une los conjuntos a los que pertenecen 'x' e 'y'
-    void Union(int x, int y){
+    virtual void Union(int x, int y){
         int rootX = Find(x);
         int rootY = Find(y);
 
@@ -64,7 +77,7 @@ public:
     }
 
     // Verifica si 'x' e 'y' están en el mismo conjunto
-    bool isConnected(int x, int y){
+    virtual bool isConnected(int x, int y){
         return Find(x) == Find(y);
     }
 
@@ -90,10 +103,12 @@ public:
 
     // DESTRUCTOR -----------------
     // liberar la memoria asignada dinámicamente
-    ~DisjoinSet(){
+    virtual ~DisjoinSet(){
         delete[] parents;
         delete[] rank;
     }
+
+
 
 };
 

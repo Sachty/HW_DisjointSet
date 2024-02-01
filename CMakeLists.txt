@@ -6,4 +6,5 @@ set(CMAKE_C_STANDARD 11)
 include_directories(.)
 
 add_executable(HW_DisjointSet
-        main.cpp)
+        main.cpp
+        DisjoinSetTree.h)

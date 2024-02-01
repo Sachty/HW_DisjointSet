@@ -3,52 +3,38 @@
 using namespace std;
 
 #include "ds.h"
+#include "DisjoinSetArray.h"
+#include "DisjoinSetTree.h"
 
 int main() {
-    // Crear un conjunto disjunto con elementos del 0 al 6
-    vector<int> elements = {0, 1, 2, 3, 4, 5, 6};
-    DisjoinSet<int> disjointSet(elements);
+// Datos de prueba
+    vector<int> data = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-    // imprimir el numero inicial de conjuntos
-    cout << "Numero inicial de conjuntos: " << disjointSet.getNumSets() << endl;
-
-    // Unir algunos elementos para formar conjuntos
+    // Prueba con DisjoinSet
+    DisjoinSet<int> disjointSet(data);
     disjointSet.Union(0, 1);
     disjointSet.Union(2, 3);
-    disjointSet.Union(4, 5);
-    disjointSet.Union(1, 2);
 
-    // imprimir el numero actual de conjuntos
-    cout << "Numero actual de conjuntos: " << disjointSet.getNumSets() << endl;
+    cout << "DisjoinSet - Is 1 connected to 2? " << disjointSet.isConnected(1, 2) << endl;
+    cout << "DisjoinSet - Is 3 connected to 4? " << disjointSet.isConnected(3, 4) << endl;
 
-    // verificar la conexion entre algunos elementos
-    cout << "Estan 0 y 3 conectados: " << (disjointSet.isConnected(0, 3) ? "Si" : "No") << endl;
-    cout << "Estan 1 y 4 conectados: " << (disjointSet.isConnected(1, 4) ? "Si" : "No") << endl;
+    // Prueba con DisjoinSetTree
+    int data1[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int dataSize2 = sizeof(data1) / sizeof(data1[0]);
+    DisjoinSetTree<int> disjointSetTree(data1, dataSize2);
+    disjointSetTree.Union(0, 1);
+    disjointSetTree.Union(2, 3);
 
-    // Obtener los elementos en el conjunto al que pertenece el elemento 1
-    vector<int> elementsSet1 = disjointSet.getElementsSet(1);
-    cout << "Elementos en el conjunto al que pertenece el elemento '1': ";
-    for (int element : elementsSet1) {
-        cout << element << " ";
-    }
-    cout << endl;
+    cout << "DisjoinSetTree - Is 1 connected to 2? " << disjointSetTree.isConnected(1, 2) << endl;
+    cout << "DisjoinSetTree - Is 3 connected to 4? " << disjointSetTree.isConnected(3, 4) << endl;
 
-    // Obtener los elementos en el conjunto al que pertenece el elemento 4
-    elementsSet1 = disjointSet.getElementsSet(4);
-    cout << "Elementos en el conjunto al que pertenece el elemento '4': ";
-    for (int element : elementsSet1) {
-        cout << element << " ";
-    }
-    cout << endl;
+    // Prueba con DisjoinSetArray
+    DisjoinSetArray<int> disjointSetArray(data1, dataSize2);
+    disjointSetArray.Union(0, 1);
+    disjointSetArray.Union(2, 3);
 
-
-    // Obtener los elementos en el conjunto al que pertenece el elemento 6
-    elementsSet1 = disjointSet.getElementsSet(6);
-    cout << "Elementos en el conjunto al que pertenece el elemento '6': ";
-    for (int element : elementsSet1) {
-        cout << element << " ";
-    }
-    cout << endl;
+    cout << "DisjoinSetArray - Is 1 connected to 2? " << disjointSetArray.isConnected(1, 2) << endl;
+    cout << "DisjoinSetArray - Is 3 connected to 4? " << disjointSetArray.isConnected(3, 4) << endl;
 
     return 0;
 }
